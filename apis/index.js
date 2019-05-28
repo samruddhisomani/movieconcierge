@@ -3,20 +3,27 @@
 const axios = require('axios');
 const fs = require('fs');
 
-const secrets = JSON.parse(fs.readFileSync('secrets.json'));
+'use strict';
 
-const getData = (query) => {
+module.exports.getData = async (event) => {
+
     const giphydata = axios
-        .get(`https://api.giphy.com/v1/gifs/random?api_key=${secrets.giphyKey}&tag=${query}&rating=G`);
+        .get(`https://api.giphy.com/v1/gifs/random?api_key=${process.env.GIPHY_KEY}&tag=${event.query}&rating=G`);
     const omdbdata = axios
-        .get(`http://www.omdbapi.com/?apikey=${secrets.omdbKey}&s=${query}`)
+        .get(`http://www.omdbapi.com/?apikey=${process.env.OMDB_KEY}&s=${event.query}`)
 
-    return Promise.all([giphydata, omdbdata]).then(values => {
+    const theGoodStuff = await Promise.all([giphydata, omdbdata]).then(values => {
         const gifURL = values[0].data.data.image_url
         const movieData = values[1].data.Search[0]
         movieData["gifURL"] = gifURL
         return movieData
     })
-}
 
-getData("godzilla").then(val => console.log(val))
+    return {
+        statusCode: 200,
+        body: JSON.stringify(theGoodStuff),
+    };
+
+    // Use this code if you don't use the http event with the LAMBDA-PROXY integration
+    // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+};
