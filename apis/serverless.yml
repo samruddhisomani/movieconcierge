@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: aws-nodejs # NOTE: update this with your service name
+service: movies # NOTE: update this with your service name
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -41,9 +41,14 @@ provider:
 #            - "Ref" : "ServerlessDeploymentBucket"
 #            - "/*"
 
+# https://medium.com/@raphaelvigee/serverless-hosting-with-github-pages-aws-lambda-3c19e55d2cc4
+custom:
+  secrets: ${file(secrets.json)}
+
 # you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+environment:
+  GIPHY_KEY: ${self:custom.secrets.giphyKey}
+  OMDB_KEY: ${self:custom.secrets.omdbKey}
 
 # you can add packaging information here
 #package:
@@ -56,7 +61,14 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: handler.getData
+      events:
+      - http:
+          method: get
+          path: '/'
+          request:
+            template:
+              application/json: '{ "foo" : "$input.params(''foo'')", "someData": "$input.params(''some_data'')" }'
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
