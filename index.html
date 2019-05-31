@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="main.css">
+        <title>Movies?!</title>
+    </head>
+    <body>
+        <header class="header"><h1>Movie Concierge</h1></header>
+        <form class="form" onsubmit="event.preventDefault(); details()">
+            <label class="form__element form__label" for="search">Search for a
+                movie!</label>
+            <input class="form__element form__input" type="text" id='search'>
+            <button class="form__element form__submit">Go!</button>
+        </form>
+        <div class='results'>
+        </div>
+        <script src="index.js"></script>
+    </body>
+</html>

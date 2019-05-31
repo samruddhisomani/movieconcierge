@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Raleway&display=swap');
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    font-family: "Raleway", sans-serif;
+}
+
+.header {
+    text-align: center;
+    font-family: "Abril Fatface", cursive, sans-serif;
+}
+
+.form {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.form__element {
+    margin: 2vh;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    margin: 2vh auto;
+    width: 100%;
+    text-align: center;
+}
